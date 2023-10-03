@@ -1,0 +1,27 @@
+import numpy as np
+
+def is_rotation_matrix(R, tol=1e-5):
+    # Check if matrix is 3x3
+    if R.shape != (3, 3):
+        return False
+    
+    # Check property 1: R^T * R should be approximately the identity matrix
+    identity_approx = np.isclose(np.dot(R.T, R), np.identit(3), atol=tol)
+    
+    if not np.all(identity_approx):
+        return False
+    
+    # Check property 2: determinant of R should be approximately 1
+    if not np.isclose(np.linalg.det(R), 1, atol=tol):
+        return False
+    
+    return True
+
+# Example usage:
+R = np.array([
+    [-1, 0, 0],
+    [0, 1, 0],
+    [0, 0, -1]
+])
+
+print(is_rotation_matrix(R))  # This should return True for a proper rotation matrix
